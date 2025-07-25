@@ -1,0 +1,52 @@
+# Java & Maven
+target/
+*.class
+*.jar
+*.war
+*.iml
+
+# Maven wrapper
+.mvn/
+!**/mvnw
+!**/mvnw.cmd
+
+# Logs
+*.log
+logs/
+*.pid
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.ipr
+*.iml
+out/
+
+# VS Code
+.vscode/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Environment & Secrets
+.env
+*.env
+application-dev.properties
+application-prod.properties
+application-local.properties
+
+# Docker
+*.tgz
+docker-compose.override.yml
+pgadmin/
+
+# Database
+*.db
+pgdata/
+postgres-data/
+pgadmin-data/
+
+# Other
+*.swp
+*.swo
