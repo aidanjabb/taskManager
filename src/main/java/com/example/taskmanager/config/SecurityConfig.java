@@ -14,7 +14,8 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 
-    // Security filter chain using Spring Security 6+ style
+    /* disable HTTP Basic Auth (enforced by spring-boot-starter-security dependency) since we haven't implemented login or security yet
+    */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http

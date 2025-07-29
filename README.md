@@ -1,19 +1,23 @@
-Before docker compose: 
+mvn clean package -DskipTests
+# note that we add the -DskipTests flag to avoid errors related to Postgres, which is not running at this pt (only begins running once we run docker compose)
 
-After you’ve run mvn clean package -DskipTests and the JAR exists in target/, build and run with:
- - note that we add the -DskipTests flag to avoid errors related to Postgres, which is not running at this pt (only begins running once we run docker compose)
-# Build Docker image
-docker build -t task-manager-api .
 
-# Run the container
-docker run -p 8080:8080 task-manager-api
-
-After docker compose:
-
-In your project root (with the JAR already built), run:
+# In your project root (with the JAR already built), run:
 docker-compose up --build
 
-# for testing HTTP requests on terminal
+# HTTP request: POST to /users:
 curl -i -X POST http://localhost:8080/users \
   -H "Content-Type: application/json" \
   -d '{"username": "______", "password": "______", "email": "______"}'
+# note that -i shows response headers; without it, we would simply get the raw response body returned by Spring, ie the created user, w/ no status code or headers shown because curl hides them by default
+
+# HTTP request: POST to /tasks:
+curl -i -X POST http://localhost:8080/tasks \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "_____",
+    "description": "_____",
+    "dueDate": "_____",
+    "priority": "_____",
+    "userId": "_____"
+  }'
