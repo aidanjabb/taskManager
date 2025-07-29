@@ -1,5 +1,5 @@
 mvn clean package -DskipTests
-# note that we add the -DskipTests flag to avoid errors related to Postgres, which is not running at this pt (only begins running once we run docker compose)
+# Note that we add the "-DskipTests" flag to avoid errors related to Postgres, which is not running at this pt (only begins running once we run docker compose)
 
 
 # In your project root (with the JAR already built), run:
