@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.example.taskmanager.model.Task;
 
 // same fields as Task, except for user for some reason
+// TODO how exactly is this class enhancing our security? only diff between this and Task class is the lack of a user field in this case
 public class TaskResponse {
     private UUID id;
     private String title;
@@ -22,5 +23,40 @@ public class TaskResponse {
         this.dueDate = dueDate;
         this.priority = priority;
         this.completed = completed;
+    }
+
+    public static TaskResponse fromEntity(Task task) {
+        return new TaskResponse(
+            task.getId(),
+            task.getTitle(),
+            task.getDescription(),
+            task.getDueDate(),
+            task.getPriority(),
+            task.getCompleted()
+        );
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public Task.Priority getPriority() {
+        return priority;
+    }
+
+    public boolean isCompleted() {
+        return completed;
     }
 }

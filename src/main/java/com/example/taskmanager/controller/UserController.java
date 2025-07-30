@@ -19,6 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    // POST /users
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest request) {
         UserResponse createdUser = userService.createUser(request);
