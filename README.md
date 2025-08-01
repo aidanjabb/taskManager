@@ -1,5 +1,4 @@
-mvn clean package -DskipTests
-# Note that we add the "-DskipTests" flag to avoid errors related to Postgres, which is not running at this pt (only begins running once we run docker compose)
+mvn clean package
 
 # In your project root (with the JAR already built), run:
 docker-compose up --build
