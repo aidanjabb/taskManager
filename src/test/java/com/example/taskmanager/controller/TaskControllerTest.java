@@ -64,9 +64,9 @@ public class TaskControllerTest {
                 .andExpect(jsonPath("$[0].priority").value("MEDIUM"));
     }
 
-    
+
     @Test
-    void f() throws Exception {
+    void testCreateTask_Success() throws Exception {
         UUID taskId = UUID.randomUUID();
         UUID userId = UUID.randomUUID();
 
@@ -101,7 +101,5 @@ public class TaskControllerTest {
             .andExpect(jsonPath("$.priority").value("HIGH"))
             .andExpect(jsonPath("$.completed").value(false));
     }
-            
-
 }
 
