@@ -53,6 +53,9 @@ public class TaskControllerTest {
         when(taskService.getTasksForUser(userId))
                 .thenReturn(Collections.singletonList(sampleTask));
 
+        /*
+        positive testing; given valid input, check for HTTP 200 OK and correct JSON structure being returned
+        */
         mockMvc.perform(get("/tasks")
                         .param("userId", userId.toString())
                         .accept(MediaType.APPLICATION_JSON))
@@ -63,7 +66,7 @@ public class TaskControllerTest {
 
     
     @Test
-    void testCreateTask_Success() throws Exception {
+    void f() throws Exception {
         UUID taskId = UUID.randomUUID();
         UUID userId = UUID.randomUUID();
 
@@ -86,6 +89,9 @@ public class TaskControllerTest {
 
         when(taskService.createTask(any(TaskRequest.class))).thenReturn(response);
 
+        /*
+        positive testing; given valid input, check for HTTP 201 Created and correct JSON structure being returned
+        */
         mockMvc.perform(post("/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
