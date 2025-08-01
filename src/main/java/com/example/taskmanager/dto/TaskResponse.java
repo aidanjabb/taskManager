@@ -25,17 +25,6 @@ public class TaskResponse {
         this.completed = completed;
     }
 
-    public static TaskResponse fromEntity(Task task) {
-        return new TaskResponse(
-            task.getId(),
-            task.getTitle(),
-            task.getDescription(),
-            task.getDueDate(),
-            task.getPriority(),
-            task.getCompleted()
-        );
-    }
-
     public UUID getId() {
         return id;
     }
@@ -56,7 +45,18 @@ public class TaskResponse {
         return priority;
     }
 
-    public boolean isCompleted() {
+    public boolean getCompleted() {
         return completed;
+    }
+
+    public static TaskResponse fromEntity(Task task) {
+        return new TaskResponse(
+            task.getId(),
+            task.getTitle(),
+            task.getDescription(),
+            task.getDueDate(),
+            task.getPriority(),
+            task.getCompleted()
+        );
     }
 }

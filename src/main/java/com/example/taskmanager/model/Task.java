@@ -24,12 +24,11 @@ public class Task {
     private Priority priority;
 
     private boolean completed = false;
-
+    
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private AppUser user;
 
-    
     // Getters and setters
     public UUID getId() { return id;}
     public void setId(UUID id) {this.id = id;}

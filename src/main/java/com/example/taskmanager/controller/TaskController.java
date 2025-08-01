@@ -3,6 +3,8 @@ package com.example.taskmanager.controller;
 import java.util.List;
 import java.util.UUID;
 import jakarta.validation.Valid;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +28,9 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<TaskResponse> createTask(@Valid @RequestBody TaskRequest request) {
         TaskResponse task = taskService.createTask(request);
-        return ResponseEntity.ok(task);
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(task);
     }
 
     // GET /tasks?userId=...

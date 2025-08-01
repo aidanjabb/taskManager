@@ -35,7 +35,7 @@ public class TaskService {
         task.setTitle(request.getTitle());
         task.setDescription(request.getDescription());
         task.setDueDate(request.getDueDate());
-        task.setPriority(Task.Priority.valueOf(request.getPriority().toUpperCase()));
+        task.setPriority(request.getPriority());
         task.setCompleted(false);
         task.setUser(user);
         Task savedTask = taskRepo.save(task);
