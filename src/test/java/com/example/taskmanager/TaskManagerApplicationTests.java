@@ -7,7 +7,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.example.taskmanager.repository.UserRepository;
 
-
+// TODO add some comment abt what we are actually doing here, related to what the @SpringBootTest annotation actually does
 @ActiveProfiles("test")
 @SpringBootTest
 class TaskManagerApplicationTests {

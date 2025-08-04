@@ -2,7 +2,7 @@ package com.example.taskmanager.dto;
 
 import java.util.UUID;
 
-// same fields as AppUser, except we exclude the password for security purposes
+// same fields as AppUser, except we exclude the password for security
 public class UserResponse {
     private UUID id;
     private String username;

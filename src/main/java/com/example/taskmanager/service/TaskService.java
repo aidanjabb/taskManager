@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.taskmanager.dto.TaskRequest;
 import com.example.taskmanager.dto.TaskResponse;
 import com.example.taskmanager.dto.UpdateTaskRequest;
+import com.example.taskmanager.exception.TaskNotFoundException;
 import com.example.taskmanager.model.Task;
 import com.example.taskmanager.model.AppUser;
 import com.example.taskmanager.repository.TaskRepository;
@@ -77,7 +78,7 @@ public class TaskService {
 
     public void deleteTask(UUID taskId) {
         if (!taskRepo.existsById(taskId)) {
-            throw new NoSuchElementException("Task not found");
+            throw new TaskNotFoundException("Task not found with id: " + taskId);
         }
         taskRepo.deleteById(taskId);
     }

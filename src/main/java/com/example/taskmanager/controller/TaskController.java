@@ -47,6 +47,7 @@ public class TaskController {
         return ResponseEntity.ok(updated);
     }
 
+    // update task details
     @PutMapping("/{taskId}")
     public ResponseEntity<TaskResponse> updateTask(
             @PathVariable UUID taskId,

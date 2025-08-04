@@ -2,16 +2,14 @@ package com.example.taskmanager.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
+// same as AppUser, except no id, since that is generated when entity is saved to DB
 public class UserRequest {
 
     @NotBlank
     private String username;
-
     @NotBlank
     private String password;
-
     private String email;
-
 
     // Getters and setters
     public String getUsername() { return username; }

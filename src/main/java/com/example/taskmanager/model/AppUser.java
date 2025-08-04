@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 
 @Entity
 public class AppUser {
-    @Id
-    @GeneratedValue
+    @Id // primary key
+    @GeneratedValue // ID is generated when entity is saved to DB
     private UUID id;
 
     @Column(nullable = false, unique = true)

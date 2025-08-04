@@ -8,7 +8,9 @@ import java.util.UUID;
 
 import com.example.taskmanager.model.Task;
 
-// same fields as Task, except for user and completed
+/*
+same fields as Task, except for id and completed (id is generated when entity is saved to DB, it wouldn't make sense to introduce the idea of the task being completed until )
+*/
 public class TaskRequest {
 
     @NotNull
@@ -20,15 +22,14 @@ public class TaskRequest {
     @NotNull
     private Task.Priority priority; // Should be LOW, MEDIUM, or HIGH
 
-
-    public TaskRequest(UUID id, String title, String description, LocalDate dueDate, Task.Priority priority) {
-        this.userId = id;
+    public TaskRequest(UUID userId, String title, String description, LocalDate dueDate, Task.Priority priority) {
+        this.userId = userId;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
     }
-
+    
     // Getters and setters
     public UUID getUserId() { return userId; }
     public void setUserId(UUID userId) { this.userId = userId; }
