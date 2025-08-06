@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  # Reuse your db service, but add a healthcheck for CI reliability.
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: taskdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d taskdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  # CI test runner: runs Maven inside a container, mounting your source.
+  tests:
+    image: maven:3.9.4-eclipse-temurin-17
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+      - ~/.m2:/root/.m2   # cache dependencies between runs (also cached in Actions)
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/taskdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      MAVEN_OPTS: -Xmx1024m
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      bash -c "mvn -B clean verify"
+
+volumes:
+  postgres-data:

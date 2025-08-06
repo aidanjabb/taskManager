@@ -3,7 +3,6 @@ package com.example.taskmanager.service;
 import java.util.stream.Collectors;
 import java.util.UUID;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
 
@@ -55,7 +54,7 @@ public class TaskService {
     public TaskResponse markTaskAsComplete(UUID taskId) {
         // TODO throws an exception if the task ID doesn’t exist, which returns 500 by default — improve on this error handling later (eg inform the user of the source of the problem, ie this is a task ID that doesn't exist)
         Task task = taskRepo.findById(taskId)
-            .orElseThrow(() -> new NoSuchElementException("Task not found"));
+            .orElseThrow(() -> new TaskNotFoundException("Task not found"));
 
         task.setCompleted(true);
         Task saved = taskRepo.save(task);
@@ -65,7 +64,7 @@ public class TaskService {
 
     public TaskResponse updateTask(UUID taskId, UpdateTaskRequest request) {
         Task task = taskRepo.findById(taskId)
-            .orElseThrow(() -> new NoSuchElementException("Task not found"));
+            .orElseThrow(() -> new TaskNotFoundException("Task not found"));
 
         task.setTitle(request.getTitle());
         task.setDescription(request.getDescription());
