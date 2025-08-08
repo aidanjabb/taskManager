@@ -2,6 +2,7 @@ package com.example.taskmanager;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
@@ -15,6 +16,7 @@ import com.example.taskmanager.repository.UserRepository;
   "spring.datasource.username=postgres",
   "spring.datasource.password=postgres"
 })
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
 @SpringBootTest
 class TaskManagerApplicationTests {
