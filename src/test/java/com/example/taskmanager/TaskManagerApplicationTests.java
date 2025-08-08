@@ -11,14 +11,15 @@ import com.example.taskmanager.repository.UserRepository;
 
 // TODO add some comment abt what we are actually doing here, related to what the @SpringBootTest annotation actually does
 
+@SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(properties = {
   "spring.datasource.url=jdbc:postgresql://db:5432/taskdb",
   "spring.datasource.username=postgres",
-  "spring.datasource.password=postgres"
+  "spring.datasource.password=postgres",
+  "spring.jpa.hibernate.ddl-auto=update"
 })
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
-@SpringBootTest
 class TaskManagerApplicationTests {
 
     @Autowired
