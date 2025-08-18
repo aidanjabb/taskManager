@@ -1,11 +1,25 @@
-# Start with an official Java 17 runtime base image
-FROM openjdk:17-jdk-slim
-
-# Set the working directory inside the container
+# -------- Build stage --------
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
 WORKDIR /app
 
-# Copy the JAR file into the container
-COPY target/task-manager-api-0.0.1-SNAPSHOT.jar app.jar
+# copy pom first and warm up dependency cache
+COPY pom.xml .
+RUN mvn -B -q -e dependency:go-offline
 
-# Tell Docker how to run the app
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# now copy sources and build
+COPY src ./src
+RUN mvn -B -DskipTests package
+
+# -------- Runtime stage --------
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+
+# copy the built jar from the builder stage
+# (adjust the glob if your artifact name/version differ)
+COPY --from=builder /app/target/*-SNAPSHOT.jar app.jar
+
+# optional: small-instance memory tuning on Render
+ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75.0"
+
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","app.jar"]
