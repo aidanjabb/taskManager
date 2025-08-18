@@ -25,9 +25,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/",                          // optional
-                                "/v3/api-docs",               // JSON root
-                                "/v3/api-docs/**",            // swagger-config & subpaths
+                                "/",
+                                "/error",                 // include error path just in case
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
                                 "/v3/api-docs.yaml",
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
@@ -35,13 +36,10 @@ public class SecurityConfig {
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
-                // IMPORTANT: allow unauthenticated requests to exist as "anonymous" so permitAll() can match.
                 .anonymous(Customizer.withDefaults())
-                // Keep httpBasic enabled; docs endpoints are already permitted so they won't prompt.
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable);
-
         return http.build();
     }
 }
