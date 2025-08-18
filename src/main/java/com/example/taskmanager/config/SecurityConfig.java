@@ -6,8 +6,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.config.Customizer;
-
 
 @Configuration
 public class SecurityConfig {
@@ -19,18 +17,17 @@ public class SecurityConfig {
     /* disable HTTP Basic Auth (enforced by spring-boot-starter-security dependency) since we haven't implemented login or security yet
     */
     @Bean
-    SecurityFilterChain security(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/v3/api-docs/**",
-                                "/swagger-ui.html",
-                                "/swagger-ui/**"
-                        ).permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        .anyRequest().authenticated() // or .permitAll() if you want the whole API public
                 )
-                .httpBasic(Customizer.withDefaults());
+                .httpBasic(httpBasic -> httpBasic.disable())
+                .formLogin(formLogin -> formLogin.disable());
+
         return http.build();
     }
+
 }
