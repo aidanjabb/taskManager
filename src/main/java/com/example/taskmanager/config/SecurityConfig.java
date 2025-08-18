@@ -19,7 +19,6 @@ public class SecurityConfig {
 
     /* disable HTTP Basic Auth (enforced by spring-boot-starter-security dependency) since we haven't implemented login or security yet
     */
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -27,18 +26,18 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",                          // optional
-                                "/v3/api-docs",               // exact
-                                "/v3/api-docs/**",            // nested (e.g., /v3/api-docs/swagger-config)
-                                "/v3/api-docs.yaml",          // yaml variant
+                                "/v3/api-docs",               // JSON root
+                                "/v3/api-docs/**",            // swagger-config & subpaths
+                                "/v3/api-docs.yaml",
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
-                                "/swagger-ui/index.html"      // some setups hit this directly
+                                "/swagger-ui/index.html"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
-                // allow anonymous users to be treated as a principal (prevents 403s when no auth is provided)
+                // IMPORTANT: allow unauthenticated requests to exist as "anonymous" so permitAll() can match.
                 .anonymous(Customizer.withDefaults())
-                // keep httpBasic enabled (or remove if you truly don't want it; docs are already permitted)
+                // Keep httpBasic enabled; docs endpoints are already permitted so they won't prompt.
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable);
