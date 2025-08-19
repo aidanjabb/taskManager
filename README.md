@@ -3,6 +3,7 @@ mvn clean package
 # In your project root (with the JAR already built), run:
 docker-compose up --build
 
+
 # HTTP request: POST to /users:
 curl -i -X POST http://localhost:8080/users \
   -H "Content-Type: application/json" \
@@ -11,7 +12,6 @@ curl -i -X POST http://localhost:8080/users \
     "password": "______", 
     "email": "______"
   }'
-
 
 # HTTP request: POST to /tasks:
 curl -i -X POST http://localhost:8080/tasks \

@@ -27,7 +27,8 @@ public class UserService {
         user.setEmail(request.getEmail());
 
         /* 
-        From Spring docs for the CrudRepository.save() function: Use the returned instance for further operations as the save operation might have changed the entity instance completely.
+        From Spring docs for the CrudRepository.save() function:
+        Use the returned instance for further operations as the save operation might have changed the entity instance completely.
         */
         AppUser savedUser = userRepo.save(user);
         return new UserResponse(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());
