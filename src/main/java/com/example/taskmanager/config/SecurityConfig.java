@@ -18,31 +18,44 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 
-    /* disable HTTP Basic Auth (enforced by spring-boot-starter-security dependency) since we haven't implemented login or security yet
-    */
+    // disable HTTP Basic Auth (enforced by spring-boot-starter-security dependency) since we haven't implemented login or security yet
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // Swagger & docs open
-                        .requestMatchers(
-                                "/",
-                                "/error",
+                        .requestMatchers("/", "/error",
                                 "/v3/api-docs", "/v3/api-docs/**", "/v3/api-docs.yaml",
-                                "/swagger-ui.html", "/swagger-ui/**", "/swagger-ui/index.html"
+                                "/swagger-ui.html", "/swagger-ui/**", "/swagger-ui/index.html",
+                                // allow signup without auth
+                                HttpMethod.POST, "/users"
                         ).permitAll()
-                        // Allow creating the first user without auth
-                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
-                        // (Optional) allow health checks
-                        //.requestMatchers("/actuator/health").permitAll()
                         .anyRequest().authenticated()
                 )
-                .anonymous(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable);
-
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider daoAuthProvider(
+            UserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider p = new DaoAuthenticationProvider();
+        p.setUserDetailsService(userDetailsService);
+        p.setPasswordEncoder(passwordEncoder);
+        return p;
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(UserRepository userRepo) {
+        return new AppUserDetailsService(userRepo);
     }
 }
