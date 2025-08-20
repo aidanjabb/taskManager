@@ -1,12 +1,12 @@
 package com.example.taskmanager.service;
 
-import com.example.taskmanager.model.AppUser;
-import com.example.taskmanager.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.example.taskmanager.model.AppUser;
+import com.example.taskmanager.repository.UserRepository;
 
 @Service
 public class AppUserDetailsService implements UserDetailsService {
