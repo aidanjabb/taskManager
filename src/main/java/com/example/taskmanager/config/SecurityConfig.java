@@ -33,6 +33,7 @@ public class SecurityConfig {
                         ).permitAll()
                         // public registration (separate call because it uses HttpMethod)
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         // everything else requires auth
                         .anyRequest().authenticated()
                 )
